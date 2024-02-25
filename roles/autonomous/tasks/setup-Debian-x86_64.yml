@@ -1,0 +1,77 @@
+---
+- name: Remove unwanted packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - czmq
+    - xtensa-esp32-elf-gcc-bin
+    - protobuf-compiler
+    - python3-protobuf
+    - pipenv
+
+- name: Install firmware packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ccache
+    - clang
+    - cmake
+    - gdb
+    - gperf
+    - jupyter-notebook
+    - libboost-all-dev
+    - ninja-build
+    - openocd
+    - python3-pandas
+    - python3-serial
+    - valgrind
+    - zsh
+    - g++-12
+
+- name: Select g++ 12
+  community.general.alternatives:
+    link: /usr/bin/g++
+    name: g++
+    path: /usr/bin/g++-12
+
+- name: Select gcc 12
+  community.general.alternatives:
+    link: /usr/bin/gcc
+    name: gcc
+    path: /usr/bin/gcc-12
+
+- name: Install pip packages where the system has an incorrect version
+  ansible.builtin.pip:
+    name:
+      - protobuf==3.20.1
+      - requests==2.27.1
+      - pipenv==2022.4.30
+
+- name: Install protobuf compiler
+  block:
+    - name: Create directory
+      ansible.builtin.file:
+        path: /usr/local/protoc
+        state: directory
+        mode: '0755'
+    - name: Fetch and extract protobuf compiler
+      ansible.builtin.unarchive:
+        src: https://github.com/protocolbuffers/protobuf/releases/download/v3.20.0/protoc-3.20.0-linux-x86_64.zip
+        remote_src: true
+        dest: /usr/local/protoc
+    - name: Link binary
+      ansible.builtin.file:
+        src: /usr/local/protoc/bin/protoc
+        dest: /usr/local/bin/protoc
+        state: link
+    - name: Link include
+      ansible.builtin.file:
+        src: /usr/local/protoc/include/google
+        dest: /usr/local/include/google
+        state: link
+
+  - name: Install Ros2
+    block:
+      

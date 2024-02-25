@@ -1,0 +1,3 @@
+repositories:
+  - path: autonomous/autonomous
+    url: git@github.com:UOA-FSAE/autonomous.git

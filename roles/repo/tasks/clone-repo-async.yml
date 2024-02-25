@@ -1,0 +1,31 @@
+---
+- name: Async clone batched repos # noqa latest[git]
+  ansible.builtin.git:
+    repo: "{{ repo.url }}"
+    dest: "{{ fs_repositories_root }}/{{ repo.path }}"
+    update: "{{ update_repositories }}"
+    key_file: "{{ unix_home_dir }}/.ssh/id_rsa"
+    accept_hostkey: true
+  async: 600
+  poll: 0
+  loop: "{{ repos }}"
+  loop_control:
+    loop_var: "repo"
+  register: clone_results
+
+- name: Check async clone status
+  ansible.builtin.async_status:
+    jid: "{{ async_result_item.ansible_job_id }}"
+  loop: "{{ clone_results.results }}"
+  loop_control:
+    loop_var: "async_result_item"
+  register: async_poll_results
+  until: async_poll_results.finished
+  retries: 120
+  delay: 5
+
+- name: "Set git remote {{ repo.url }}"   # noqa no-changed-when
+  ansible.builtin.command: "bash -c 'cd {{ fs_repositories_root }}/{{ repo.path }} && git remote set-url origin {{ repo.url }}'"
+  loop: "{{ repos }}"
+  loop_control:
+    loop_var: "repo"

@@ -1,0 +1,11 @@
+---
+- name: Set fs_repositories_root
+  ansible.builtin.set_fact:
+    fs_repositories_root: "{{ unix_home_dir }}/fs"
+  when: fs_repositories_root is undefined
+
+- name: Ensure repos are cloned
+  vars:
+    repos: "{{ item }}"
+  ansible.builtin.include_tasks: clone-repos-async.yml
+  loop: "{{ repositories | batch(30) | list }}"
