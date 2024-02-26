@@ -6,7 +6,7 @@ This repo will install everything you need in order to program on the FSAE team 
 ### Step 1
 Clone this repo
 ```bash
-git clone git@github.com: ~/fs/fs-common-dev
+mkdir ~/fs/fs-common-dev && git clone git@github.com:UOA-FSAE/fs-common-dev.git ~/fs/fs-common-dev
 ```
 
 ### Step 2
