@@ -1,1 +1,1 @@
-unix_home_dir: $HOME
+unix_home_dir: /home/chris # TODO: FIX THIS BULLSHIT

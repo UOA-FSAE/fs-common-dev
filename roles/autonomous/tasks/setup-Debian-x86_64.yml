@@ -10,7 +10,7 @@
     - python3-protobuf
     - pipenv
 
-- name: Install firmware packages
+- name: Install packages
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
