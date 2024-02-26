@@ -22,3 +22,11 @@ Install everything, this may take a bit so go touch the Accumulator :)
 ```bash
 make
 ```
+
+# How to update
+If there is an update then please use the following commands
+```bash
+cd ~/fs/fs-common-dev
+git pull
+make
+```

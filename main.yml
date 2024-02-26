@@ -3,8 +3,15 @@
   vars_files:
     - vars/main.yml
     - vars/repo.yml
+    - vars/ros2.yml
+    - vars/custom.yml
   roles:
+    - role: repo
+      tags: repo
     - role: autonomous
       tags: autonomous
+    - role: ros2
+      tags: ros2
     - role: electrons
       tags: electrons
+      when: electron_role

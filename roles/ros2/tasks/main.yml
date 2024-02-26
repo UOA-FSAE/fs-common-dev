@@ -1,0 +1,12 @@
+---
+- name: Include vars
+  ansible.builtin.include_vars: main.yml
+  ansible.builtin.include_vars: ros2.yml
+
+- name: Install ROS2
+  include: ros2-install.yml
+  tags: ros2-install
+
+- name: ROS2 Packages Install
+  include: ros2-packages-install.yml
+  tags: ros2-packages-install

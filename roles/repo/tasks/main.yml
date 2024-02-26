@@ -7,5 +7,5 @@
 - name: Ensure repos are cloned
   vars:
     repos: "{{ item }}"
-  ansible.builtin.include_tasks: clone-repos-async.yml
+  ansible.builtin.include_tasks: clone-repo-async.yml
   loop: "{{ repositories | batch(30) | list }}"

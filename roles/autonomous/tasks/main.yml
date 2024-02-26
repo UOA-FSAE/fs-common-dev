@@ -1,11 +1,7 @@
 ---
 - name: Include vars
   ansible.builtin.include_vars: main.yml
-
-- name: Set arm_none_eabi filenames
-  ansible.builtin.set_fact:
-    current_arm_none_eabi_filename: "{{ current_arm_none_eabi_url.split('/')[-1] }}"
-    previous_arm_none_eabi_filename: "{{ previous_arm_none_eabi_url.split('/')[-1] }}"
+  ansible.builtin.include_vars: repo.yml
 
 - name: Include OS and arch specific tasks
   ansible.builtin.include_tasks: "setup-{{ ansible_os_family }}-{{ ansible_machine }}.yml"

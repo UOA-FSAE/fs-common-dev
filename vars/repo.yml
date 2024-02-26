@@ -1,3 +1,6 @@
 repositories:
   - path: autonomous/autonomous
-    url: git@github.com:UOA-FSAE/autonomous.git
+    url: https://github.com/UOA-FSAE/autonomous.git
+  - path: autonomous/FSAE-Unity-Simulation
+    url: https://github.com/UOA-FSAE/FSAE-Unity-Simulation.git
+  
